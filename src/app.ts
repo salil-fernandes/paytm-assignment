@@ -27,6 +27,20 @@ fastify.addHook("onRequest", async (request, reply) => {
   reply.header("x-request-id", request.id);
 });
 
+// Root route
+fastify.get("/", async (_request, reply) => {
+  return reply.status(200).send({
+    service: "high-concurrency-seat-reservation-api",
+    status: "healthy",
+    documentation: {
+      health: "/healthz",
+      readiness: "/readyz",
+      metrics: "/metrics",
+      shows: "/shows",
+    },
+  });
+});
+
 // Register show routes
 fastify.register(healthRoutes);
 fastify.register(showRoutes);
